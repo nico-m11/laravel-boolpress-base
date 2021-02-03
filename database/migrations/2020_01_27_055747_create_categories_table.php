@@ -21,6 +21,8 @@ class CreateCategoriesTable extends Migration
         });
     }
 
+
+
     /**
      * Reverse the migrations.
      *
