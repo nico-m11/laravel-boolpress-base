@@ -11,9 +11,7 @@ class PostInformationSeeder extends Seeder
      */
     public function run()
     {
-        factory(PostInformationModel::class,100)->create()->each(function($id) {
-            $id->save();
-        });
+        factory(App\PostInformationModel::class,10)->create();
     }
     
 }

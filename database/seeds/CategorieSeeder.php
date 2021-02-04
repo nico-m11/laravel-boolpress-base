@@ -13,8 +13,6 @@ class CategorieSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\CategorieModel::class, 100)->create()->each(function ($el_categorie){
-            $el_categorie->save();
-        });
+        factory(App\CategorieModel::class, 10)->create();
     }
 }

@@ -7,7 +7,7 @@
       <th scope="col">#</th>
       <th scope="col">Titolo</th>
       <th scope="col">Autore</th>
-      <th scope="col">Id_categoria</th>
+      <th scope="col">Descrizione</th>
       <th scope="col">Altro</th>
     </tr>
   </thead>
@@ -17,10 +17,14 @@
       <th scope="row">{{ $key->id }}</th>
       <td>{{ $key->title }}</td>
       <td>{{ $key->author }}</td>
-      <td>{{ $key->category_id }}</td>
+      @if ($key->postInformation != null)
+        <td>{{ $key->postInformation->description }}</td>
+      @else
+        <td>No description availablabe</td>
+      @endif
       <td> <a href="#"></a> </td>
     </tr>
-    @endforeach
+  @endforeach
   </tbody>
 </table>
 @endsection

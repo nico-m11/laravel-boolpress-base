@@ -9,7 +9,13 @@ class PostInformationModel extends Model
 {
     protected $table = 'posts_information';
 
-    public function posts() {
-        return $this->belongsTo('App\PostModel');
+    protected $fillable = ['post_id',
+     'description', 
+     'slug',
+     'id'
+    ];
+
+    public function post() {
+        return $this->belongsTo('App\PostModel', 'post_id', 'id');
     }
 }
