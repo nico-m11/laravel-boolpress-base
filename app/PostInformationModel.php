@@ -9,10 +9,10 @@ class PostInformationModel extends Model
 {
     protected $table = 'posts_information';
 
-    protected $fillable = ['post_id',
-     'description', 
-     'slug',
-     'id'
+   protected $fillable = ['post_id',
+    'description', 
+    'slug',
+    'id'
     ];
 
     public function post() {

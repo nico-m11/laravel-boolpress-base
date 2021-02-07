@@ -2,7 +2,12 @@
 
 @section('main')
 <table class="table table-dark table-striped">
+
   <thead class="table-dark">  
+  <td>
+  <a class="btn btn-outline-warning" href="http://localhost:8000/post/create">Crea Nuovo Utente</a>
+  <td>
+  </td>
     <tr>
       <th scope="col">#</th>
       <th scope="col">Titolo</th>
@@ -22,7 +27,12 @@
       @else
         <td>No description availablabe</td>
       @endif
-      <td> <a href="#"></a> </td>
+      <td><a class="btn btn-outline-warning" href="{{ route('post.show', $key->id) }}">Dettagli</a></td>
+      <td><a class="btn btn-outline-warning" href="{{ route('post.edit', $key->id) }}">Modifica</a></td>
+      @csrf
+      @method('delete')
+      <td><a class="btn btn-outline-danger"  href="/">Elimina</a></td>
+     
     </tr>
   @endforeach
   </tbody>

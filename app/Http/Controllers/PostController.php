@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\PostModel;
 use App\PostInformationModel;
 use App\CategorieModel;
+use App\TagModel;
+use App\TagPostModel;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -18,7 +21,8 @@ class PostController extends Controller
     public function index()
     {
         $data = PostModel::all();
-        return view('home', compact('data'));
+        $tag =  TagModel::all();
+        return view('home', compact('data', 'tag'));
     }
 
     /**
@@ -28,7 +32,11 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $tag = TagModel::all();
+        $category = CategorieModel::all();
+
+        return view('create', compact('tag', 'category'));
+
     }
 
     /**
@@ -39,7 +47,21 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $creaPost = new PostModel();
+        $creaPost->title = $request->input('inputPostTitle');
+        $creaPost->author = $request->input("inputPostAuthor");
+        $creaPost->category_id = $request->input("inputPostCategory");
+        $creaPost->save();
+        
+
+        $creaPostInf = new PostInformationModel();
+        $creaPostInf->post_id = $creaPost->id;
+        $creaPostInf->description = $request->input("inputPostDesc");
+        $creaPostInf->slug = Str::slug($creaPost->title);
+        $creaPostInf->save();
+
+        $creaPost->tag();
+        return view('succes');
     }
 
     /**
@@ -50,7 +72,9 @@ class PostController extends Controller
      */
     public function show($id)
     {
-         //
+         $data = PostModel::find($id);
+         return view('detail', compact('data'));
+         
     }
 
     /**
@@ -61,7 +85,11 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+     
+        $data = PostModel::find($id);
+        $categories = CategorieModel::all();
+        $tags = TagModel::all();
+        return view('edit', compact('data', 'categories', 'tags'));
     }
 
     /**
@@ -73,7 +101,26 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $updatePost = PostModel::find($id);
+        $updatePost->title = $request['inputPostTitle'];
+        $updatePost->author = $request["inputPostAuthor"];
+        $updatePost->category_id = $request["inputPostCategory"];
+        $updatePost->save();
+
+        
+        $updatePostInformation = PostInformationModel::where('post_id', $updatePost->id);
+        $updatePostInformation->description = $request["inputPostDesc"];
+        $updatePostInformation->slug = "prova-slug";
+        $updatePostInformation->save();
+
+        
+        $tags = $request["inputPostTag"];
+        foreach ($tags as $tag) {
+            $updatePost->Tag()->attach($tag);
+        }
+
+        $data = PostModel::find($updatePost->id);
+        return view('edit', compact('data'));
     }
 
     /**
@@ -82,8 +129,12 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($data)
     {
-        //
+        $data->info()->delete();
+        $data->tag()->detach();
+        $data->delete;
+
+        return redirect()->route('home');
     }
 }

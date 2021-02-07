@@ -17,7 +17,9 @@
 </head>
 </head>
 <body>
+  
     @section('main')
     @show
+
 </body>
 </html>
