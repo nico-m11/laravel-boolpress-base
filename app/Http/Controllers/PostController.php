@@ -108,19 +108,20 @@ class PostController extends Controller
         $updatePost->save();
 
         
-        $updatePostInformation = PostInformationModel::where('post_id', $updatePost->id);
+        $updatePostInformation = PostInformationModel::where('post_id', $updatePost->id)->first();
         $updatePostInformation->description = $request["inputPostDesc"];
         $updatePostInformation->slug = "prova-slug";
         $updatePostInformation->save();
 
-        
-        $tags = $request["inputPostTag"];
-        foreach ($tags as $tag) {
-            $updatePost->Tag()->attach($tag);
-        }
+        $updatePost->tag()->sync($request['inputPostTag']);
+
+        //$tags = $request["inputPostTag"];
+        //foreach ($tags as $tag) {
+            //$updatePost->tag()->attach($tag);
+        //}
 
         $data = PostModel::find($updatePost->id);
-        return view('edit', compact('data'));
+        return view('detail', compact('data'));
     }
 
     /**
@@ -129,12 +130,21 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($data)
+    public function destroy($id)
     {
-        $data->info()->delete();
-        $data->tag()->detach();
-        $data->delete;
+        
 
-        return redirect()->route('home');
+        $elimina = PostModel::find($id);
+
+        $elimina->postInformation()->delete();
+
+        $tags = $elimina->tag;
+        foreach($tags as $tag){
+            $elimina->tag()->detach($tag->id);
+        }
+
+        $elimina->delete();
+
+        return redirect()->back();
     }
 }

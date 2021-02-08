@@ -27,7 +27,7 @@
                 <div class="col-sm-10">
                     <select name="inputPostCategory" class="form-control">
                         @foreach($categories as $category)
-                            @if($category->id == $data->postCat->id)
+                            @if($category->id == $data->categorie->id)
                                 <option value="{{ $category->id }}" selected >{{ $category->title }}</option>
                             @else
                                 <option value="{{ $category->id }}">{{ $category->title }}</option>
@@ -39,12 +39,12 @@
             <div class="form-group row">
                 <label for="inputPostDesc" class="col-sm-2 col-form-label">Descrizione</label>
                 <div class="col-sm-10">
-                    <input type="name" class="form-control" id="inputPostDesc" name="inputPostDesc" placeholder="Description" value="{{$data->postInf->description}}">
+                    <input type="name" class="form-control" id="inputPostDesc" name="inputPostDesc" placeholder="Description" value="{{$data->postInformation->description}}">
                 </div>
             </div>
            
             <div class="form-group row">
-                <label for="inputGuestRoom" class="col-sm-2 col-form-label">Tag</label>
+                <label for="inputGuesttag[]" class="col-sm-2 col-form-label">Tag</label>
                 <div class="col-sm-10">
                         @foreach($tags as $tag)
                             
@@ -62,7 +62,7 @@
             </div>
             <div class="form-group row">
                 <div class="col-sm-10">
-                <button type="submit" class="btn btn-primary">Create</button>
+                <button type="submit" class="btn btn-primary">Modifica</button>
                 </div>
             </div>
         </form>

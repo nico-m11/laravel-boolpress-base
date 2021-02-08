@@ -29,10 +29,14 @@
       @endif
       <td><a class="btn btn-outline-warning" href="{{ route('post.show', $key->id) }}">Dettagli</a></td>
       <td><a class="btn btn-outline-warning" href="{{ route('post.edit', $key->id) }}">Modifica</a></td>
-      @csrf
-      @method('delete')
-      <td><a class="btn btn-outline-danger" method='post' value='DELETE' href="{{ route('post.destroy', $key->id) }}">Elimina</a></td>
      
+      <td>
+      <form method="post" class="d-inline"action="{{route('post.destroy', $key->id)}}">
+          @csrf
+          @method('delete')
+         <input type="submit" class="btn btn-outline-danger" value="Elimina">
+        </form>
+        </td>
     </tr>
   @endforeach
   </tbody>
