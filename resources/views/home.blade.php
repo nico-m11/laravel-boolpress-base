@@ -31,7 +31,7 @@
       <td><a class="btn btn-outline-warning" href="{{ route('post.edit', $key->id) }}">Modifica</a></td>
       @csrf
       @method('delete')
-      <td><a class="btn btn-outline-danger"  href="/">Elimina</a></td>
+      <td><a class="btn btn-outline-danger" method='post' value='DELETE' href="{{ route('post.destroy', $key->id) }}">Elimina</a></td>
      
     </tr>
   @endforeach
